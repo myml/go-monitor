@@ -1,6 +1,7 @@
 package main
 
 import (
+	"C"
 	"log"
 	"net"
 	"net/http"
@@ -136,7 +137,11 @@ type R struct {
 	Down uint64
 }
 
-func main() {
+//export GoServer
+func GoServer(addr string, isGo bool) *C.char {
+	return C.CString(server(addr, isGo))
+}
+func server(addr string, isGo bool) string {
 	start()
 	h := macaron.Classic()
 	h.Use(macaron.Renderer())
@@ -150,10 +155,19 @@ func main() {
 		log.Println(out)
 		ctx.JSON(200, out)
 	})
-	l, err := net.Listen("tcp", ":1234")
+	l, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Panic(err)
 	}
 	log.Println(l.Addr())
-	http.Serve(l, h)
+	if isGo {
+		go http.Serve(l, h)
+		return l.Addr().String()
+	} else {
+		err := http.Serve(l, h)
+		return err.Error()
+	}
+}
+func main() {
+	log.Panic(server("127.0.0.1:", false))
 }

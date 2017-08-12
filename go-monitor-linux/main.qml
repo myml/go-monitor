@@ -4,6 +4,7 @@ import QtQuick.Window 2.0
 
 ApplicationWindow {
     property int w: 50
+    property string addr: ""
     id: root
     visible: true
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
@@ -25,9 +26,9 @@ ApplicationWindow {
     }
     function getInfo() {
         var xhr = new XMLHttpRequest()
-        xhr.open("GET", "http://127.0.0.1:1234", false)
+        xhr.open("GET", addr, false)
         xhr.send()
-		return JSON.parse(xhr.responseText)
+        return JSON.parse(xhr.responseText)
     }
     Timer {
         repeat: true
@@ -40,10 +41,12 @@ ApplicationWindow {
         }
     }
     Component.onCompleted: {
-        var info = getInfo()
-        for (var k in info) {
-            data.append(info[k])
-        }
+
+
+        //        var info = getInfo()
+        //        for (var k in info) {
+        //            data.append(info[k])
+        //        }
     }
 
     MouseArea {
