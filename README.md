@@ -1,9 +1,25 @@
 # Linux系统监视悬浮窗   
-用QML+[therecipe/qt](https://github.com/therecipe/qt)写的系统资源监视悬浮框
-纯QML实现在[这里](https://github.com/myml/qml-monitor)，因为一些功能QML无法实现，所以创建这个项目
-* 界面参考 [软媒魔方](http://mofang.ruanmei.com/)  
-* 实现参考 [深度系统监视器原理剖析](http://www.jianshu.com/p/deb0ed35c1c2?from=jiantop.com)  
-* 实现细节 [Wiki](https://github.com/myml/qml-monitor/wiki)  
+用QML+Golang写的系统资源监视悬浮框  
+纯QML实现在[这里](https://github.com/myml/qml-monitor)  
+# 编译教程
+## 环境
+* Qt5.9.1
+* Golang1.9bate2  
+
+## Linux编译过程
+```
+git clone https://github.com/myml/go-monitor.git
+cd go-monitor
+go build -buildmode=c-archive -o libMonitor.a main.go
+cd go-monitor-linux
+qmake
+make
+./go-monitor-linux
+```
+# 说明
+* 界面参考 [软媒魔方](http://mofang.ruanmei.com/)
+* 实现参考 [深度系统监视器原理剖析](http://www.jianshu.com/p/deb0ed35c1c2?from=jiantop.com)
+* 实现细节 [Wiki](https://github.com/myml/qml-monitor/wiki)
 * 开发环境 Qt5.9.1
 * 发布环境 Qt5.9.1
 * 测试环境 Deepin15.4.1
